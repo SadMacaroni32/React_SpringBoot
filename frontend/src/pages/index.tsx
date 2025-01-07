@@ -2,7 +2,7 @@
 export const MainPage = () => {
     return (
         <>
-            Test
+            5
         </>
     );
 };

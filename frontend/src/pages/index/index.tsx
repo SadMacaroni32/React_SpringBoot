@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { Box, Paper, IconButton } from '@mui/material';
+import { useEffect, useState } from 'react';
+import { Box, Paper } from '@mui/material';
 import { getDatabase, ref, set, push, onValue, remove } from 'firebase/database';
-import DeleteIcon from '@mui/icons-material/Delete';
 import MessageBox from './components/Messagebox';  // Adjust path if necessary
 import { firebaseInit } from '../../firebaseConfig';  // Make sure firebase is initialized
 import UsernamePopup from './components/UsernamePopup';

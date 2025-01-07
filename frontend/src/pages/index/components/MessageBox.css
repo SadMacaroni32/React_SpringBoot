@@ -1,0 +1,59 @@
+/* Center the header text */
+.center-header {
+    text-align: center;
+  }
+  
+  /* Styles for the message cell */
+  .message-cell {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Ensures the message text and delete icon are on opposite ends */
+    width: 100%;
+  }
+  
+  /* Styles for the message text */
+  .message-text {
+    flex-grow: 1;
+    font-size: 14px;
+    color: #333;
+  }
+  
+  /* Styles for the delete icon */
+  .delete-icon {
+    margin-left: 8px;
+    cursor: pointer;
+  }
+  
+  /* Center the placeholder in the text input (for any input inside the MessageBox) */
+  input::placeholder {
+    text-align: center;
+  }
+
+  /* In your MessageBox.css */
+.message-cell {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+  
+  .message-text {
+    flex-grow: 1;
+    font-size: 14px;
+    color: #333;
+  }
+  
+  .delete-icon {
+    margin-left: 8px;
+    cursor: pointer;
+  }
+  
+  .center {
+    text-align: center;
+  }
+  
+  .MuiDataGrid-root {
+    overflow-x: auto; /* Enables horizontal scrolling if columns overflow */
+  }
+  
+  

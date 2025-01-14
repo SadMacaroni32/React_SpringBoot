@@ -1,14 +1,18 @@
+import React from 'react';
 import './App.css';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'; // Import BrowserRouter, Routes, Route
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
-import MainPage from './pages/index'; // Assuming MainPage is in './pages'
+// Use dynamic import for code splitting
+const MainPage = React.lazy(() => import('./pages/index'));  // Dynamically import MainPage
 
 function App() {
   return (
     <Router>
-      <Routes>
-        <Route path="/" element={<MainPage />} /> {/* Define path and element */}
-      </Routes>
+      <React.Suspense fallback={<div>Loading...</div>}>  {/* Fallback UI while loading */}
+        <Routes>
+          <Route path="/" element={<MainPage />} /> {/* Define path and element */}
+        </Routes>
+      </React.Suspense>
     </Router>
   );
 }

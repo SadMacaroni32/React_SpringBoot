@@ -1,9 +1,12 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box, Paper } from '@mui/material';
 import { getDatabase, ref, set, push, onValue, remove } from 'firebase/database';
-import MessageBox from './components/Messagebox';  // Adjust path if necessary
 import { firebaseInit } from '../../firebaseConfig';  // Make sure firebase is initialized
-import UsernamePopup from './components/UsernamePopup';
+
+// Lazy load both components
+const MessageBox = React.lazy(() => import('./components/Messagebox'));  // Correct the import path here
+const UsernamePopup = React.lazy(() => import('./components/UsernamePopup'));  // Lazy load UsernamePopup component
+
 const db = getDatabase(firebaseInit);  // Use `db` for Firebase Database
 
 const MainPage = () => {
@@ -56,17 +59,21 @@ const MainPage = () => {
     <div>
       {/* Show the Username Popup if username is not set */}
       {username === '' && (
-        <UsernamePopup
-          onSubmit={handleUsernameSubmit}
-          onClose={() => console.log('Popup closed')}
-        />
+        <React.Suspense fallback={<div>Loading Username Popup...</div>}>
+          <UsernamePopup
+            onSubmit={handleUsernameSubmit}
+            onClose={() => console.log('Popup closed')}
+          />
+        </React.Suspense>
       )}
 
       {/* Main Page content */}
       <Box sx={{ width: '100%', padding: 2 }}>
         <Paper sx={{ height: 400, width: '100%' }}>
-          {/* Use the MessageBox component here */}
-          <MessageBox rows={rows} onDelete={handleDelete} />
+          {/* Use the MessageBox component here, wrapped in Suspense */}
+          <React.Suspense fallback={<div>Loading Messages...</div>}>
+            <MessageBox rows={rows} onDelete={handleDelete} />
+          </React.Suspense>
         </Paper>
       </Box>
 

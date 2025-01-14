@@ -1,3 +1,4 @@
+// MessageBox.tsx remains unchanged
 import React from 'react';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import { IconButton } from '@mui/material';
@@ -10,7 +11,6 @@ interface MessageBoxProps {
 }
 
 const MessageBox: React.FC<MessageBoxProps> = ({ rows, onDelete }) => {
-  // Define the columns to display the messages in a single column with the format: "Username: Message" + DeleteIcon
   const columns: GridColDef[] = [
     {
       field: 'messageWithDelete',
@@ -39,13 +39,14 @@ const MessageBox: React.FC<MessageBoxProps> = ({ rows, onDelete }) => {
     <div style={{ height: 400, width: '100%', overflow: 'auto' }}>
       <DataGrid
         rows={rows}
-        columns={columns}  // Use the concatenated message and delete icon column
-        disableColumnMenu // Disable the column menu (where filter option appears)
-        disableColumnFilter // Disable the column filter feature
-        disableColumnSelector // Disable column selector
-        disableColumnResize  // Disable column resizing
-        hideFooter // Disable the entire footer (pagination controls)
-        style={{ overflow: 'auto' }}  // Enable scrolling within the data grid
+        columns={columns}
+        disableColumnMenu
+        disableColumnFilter
+        disableColumnSelector
+        disableColumnResize
+        disableRowSelectionOnClick
+        hideFooter
+        style={{ overflow: 'auto' }}
       />
     </div>
   );

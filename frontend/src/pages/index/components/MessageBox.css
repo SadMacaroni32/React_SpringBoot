@@ -1,59 +1,89 @@
 /* Center the header text */
 .center-header {
-    text-align: center;
-  }
-  
-  /* Styles for the message cell */
-  .message-cell {
-    display: flex;
-    align-items: center;
-    justify-content: space-between; /* Ensures the message text and delete icon are on opposite ends */
-    width: 100%;
-  }
-  
-  /* Styles for the message text */
-  .message-text {
-    flex-grow: 1;
-    font-size: 14px;
-    color: #333;
-  }
-  
-  /* Styles for the delete icon */
-  .delete-icon {
-    margin-left: 8px;
-    cursor: pointer;
-  }
-  
-  /* Center the placeholder in the text input (for any input inside the MessageBox) */
-  input::placeholder {
-    text-align: center;
-  }
+  text-align: center;
+}
 
-  /* In your MessageBox.css */
+/* Styles for the message cell */
 .message-cell {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-  }
-  
-  .message-text {
-    flex-grow: 1;
-    font-size: 14px;
-    color: #333;
-  }
-  
-  .delete-icon {
-    margin-left: 8px;
-    cursor: pointer;
-  }
-  
-  .center {
-    text-align: center;
-  }
-  
-  .MuiDataGrid-root {
-    overflow-x: auto; /* Enables horizontal scrolling if columns overflow */
-  }
-  
-  
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Ensures the message text and delete icon are on opposite ends */
+  width: 100%;
+}
+
+/* Styles for the message text */
+.message-text {
+  flex-grow: 1;
+  font-size: 14px;
+  color: #333;
+}
+
+/* Styles for the delete icon */
+.delete-icon {
+  margin-left: 8px;
+  cursor: pointer;
+}
+
+
+
+/* In your MessageBox.css */
+.message-cell {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.message-text {
+  flex-grow: 1;
+  font-size: 14px;
+  color: #333;
+}
+
+.delete-icon {
+  margin-left: 8px;
+  cursor: pointer;
+}
+
+.center {
+  text-align: center;
+}
+
+.MuiDataGrid-root {
+  overflow-x: auto; /* Enables horizontal scrolling if columns overflow */
+}
+
+/* Scrollbar styling for DataGrid */
+.MuiDataGrid-root::-webkit-scrollbar {
+  width: 8px;  /* Vertical scrollbar width */
+  height: 8px; /* Horizontal scrollbar height */
+}
+
+.MuiDataGrid-root::-webkit-scrollbar-track {
+  background: #f1f1f1;  /* Track color */
+}
+
+.MuiDataGrid-root::-webkit-scrollbar-thumb {
+  background: #888;  /* Thumb (handle) color */
+  border-radius: 500px; /* Rounded corners */
+}
+
+.MuiDataGrid-root::-webkit-scrollbar-thumb:hover {
+  background: #242424;  /* Darker thumb on hover */
+}
+
+/* Scrollbar styling for Firefox */
+.MuiDataGrid-root {
+  scrollbar-width: thin;
+  scrollbar-color: #888 #f1f1f1;
+}
+
+/* Optional scroll customization for any overflow div */
+div[style*="overflow"]::-webkit-scrollbar {
+  height: 8px;
+  background: #f1f1f1;
+}
+
+div[style*="overflow"]::-webkit-scrollbar-thumb {
+  background: #888;
+}

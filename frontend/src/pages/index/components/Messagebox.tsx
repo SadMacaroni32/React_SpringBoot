@@ -1,6 +1,6 @@
 // MessageBox.tsx remains unchanged
 import React from 'react';
-import { DataGrid, GridColDef } from '@mui/x-data-grid';
+import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
 import { IconButton } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import './MessageBox.css';  // Import the CSS file
@@ -17,7 +17,9 @@ const MessageBox: React.FC<MessageBoxProps> = ({ rows, onDelete }) => {
       headerName: 'Telegram ni JE',
       headerClassName: 'center',
       flex: 1,
-      renderCell: (params: any) => (
+      headerAlign: 'center',  // Center-aligns the header text
+      fontWeight: 50,
+      renderCell: (params: GridRenderCellParams) => (
         <div className="message-cell">
           <div className="message-text">
             <strong>{params.row.username}:</strong> {params.row.message}
@@ -26,14 +28,16 @@ const MessageBox: React.FC<MessageBoxProps> = ({ rows, onDelete }) => {
             color="error"
             onClick={() => onDelete(params.row.id, params.row.username)}
             className="delete-icon"
+            aria-label={`Delete message from ${params.row.username}`}
           >
             <DeleteIcon />
           </IconButton>
         </div>
       ),
-      sortable: false,  // Disable sorting for this column
+      sortable: false,
     },
   ];
+  
 
   return (
     <div style={{ height: 400, width: '100%', overflow: 'auto' }}>

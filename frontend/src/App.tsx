@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { CircularProgress } from '@mui/material';  // Import CircularProgress
 
 // Use dynamic import for code splitting
 const MainPage = React.lazy(() => import('./pages/index'));  // Dynamically import MainPage
@@ -8,7 +9,7 @@ const MainPage = React.lazy(() => import('./pages/index'));  // Dynamically impo
 function App() {
   return (
     <Router>
-      <React.Suspense fallback={<div>Loading...</div>}>  {/* Fallback UI while loading */}
+      <React.Suspense fallback={<CircularProgress />} >  {/* Fallback UI while loading */}
         <Routes>
           <Route path="/" element={<MainPage />} /> {/* Define path and element */}
         </Routes>

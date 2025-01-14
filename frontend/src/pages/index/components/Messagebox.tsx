@@ -18,7 +18,6 @@ const MessageBox: React.FC<MessageBoxProps> = ({ rows, onDelete }) => {
       headerClassName: 'center',
       flex: 1,
       headerAlign: 'center',  // Center-aligns the header text
-      fontWeight: 50,
       renderCell: (params: GridRenderCellParams) => (
         <div className="message-cell">
           <div className="message-text">

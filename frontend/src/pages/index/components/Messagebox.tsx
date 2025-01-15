@@ -10,16 +10,21 @@ interface MessageBoxProps {
 }
 
 const MessageBox: React.FC<MessageBoxProps> = memo(({ rows, onDelete }) => {
-  const gridRef = useRef<HTMLDivElement>(null); // Ref for the DataGrid wrapper
+  const gridRef = useRef<HTMLDivElement>(null); // Ref for DataGrid container
 
   useEffect(() => {
-    if (gridRef.current) {
-      const scrollableElement = gridRef.current.querySelector('.MuiDataGrid-virtualScroller');
-      if (scrollableElement) {
-        scrollableElement.scrollTop = scrollableElement.scrollHeight;
+    const scrollToBottom = () => {
+      if (gridRef.current) {
+        const virtualScroller = gridRef.current.querySelector('.MuiDataGrid-virtualScroller');
+        if (virtualScroller) {
+          setTimeout(() => {
+            virtualScroller.scrollTop = virtualScroller.scrollHeight;
+          }, 0);  // Small delay to ensure DOM update is complete
+        }
       }
-    }
-  }, [rows]); // Trigger the effect when rows are updated
+    };
+    scrollToBottom();  // Call the function whenever rows are updated
+  }, [rows]);  // Ensure scrolling occurs on rows update
 
   const columns: GridColDef[] = [
     {

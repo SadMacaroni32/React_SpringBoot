@@ -1,8 +1,14 @@
-// UsernamePopup.tsx
-import React, { useState } from "react";
-import { Dialog, DialogActions, DialogContent, DialogTitle, TextField, Button } from "@mui/material";
+import React, { useState, useEffect } from "react";
+import {
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  TextField,
+  Button,
+  Typography
+} from "@mui/material";
 
-// Define the props interface
 interface UsernamePopupProps {
   onSubmit: (username: string) => void;
   onClose: () => void;
@@ -10,10 +16,23 @@ interface UsernamePopupProps {
 
 const UsernamePopup: React.FC<UsernamePopupProps> = ({ onSubmit, onClose }) => {
   const [username, setUsername] = useState<string>("");
+  const [userId, setUserId] = useState<string | null>(null);
+
+  // Extract userId from URL
+  useEffect(() => {
+    const id = new URLSearchParams(window.location.search).get("userId");
+    setUserId(id);
+  }, []);
 
   const handleSubmit = () => {
-    if (username) {
-      onSubmit(username); // Send the username back to the parent component
+    if (username.trim()) {
+      onSubmit(username.trim());
+    }
+  };
+
+  const handleKeyPress = (event: React.KeyboardEvent) => {
+    if (event.key === "Enter") {
+      handleSubmit();
     }
   };
 
@@ -21,6 +40,11 @@ const UsernamePopup: React.FC<UsernamePopupProps> = ({ onSubmit, onClose }) => {
     <Dialog open={true} onClose={onClose}>
       <DialogTitle>Enter Username</DialogTitle>
       <DialogContent>
+        {userId && (
+          <Typography variant="subtitle1" style={{ marginBottom: "10px" }}>
+            User ID: {userId} {/* Displaying the userId */}
+          </Typography>
+        )}
         <TextField
           autoFocus
           margin="dense"
@@ -29,13 +53,14 @@ const UsernamePopup: React.FC<UsernamePopupProps> = ({ onSubmit, onClose }) => {
           fullWidth
           value={username}
           onChange={(e) => setUsername(e.target.value)}
+          onKeyPress={handleKeyPress}
         />
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose} color="primary">
           Cancel
         </Button>
-        <Button onClick={handleSubmit} color="primary">
+        <Button onClick={handleSubmit} color="primary" disabled={!username.trim()}>
           Submit
         </Button>
       </DialogActions>

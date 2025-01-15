@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { Box, Paper } from '@mui/material';
 import { getDatabase, ref, set, push, onValue, remove } from 'firebase/database';
-import { firebaseInit } from '../../firebaseConfig';  // Make sure firebase is initialized
+import { firebaseInit } from '../../firebaseConfig';  // Ensure firebase is initialized
 
 // Lazy load both components
-const MessageBox = React.lazy(() => import('./components/Messagebox'));  // Correct the import path here
-const UsernamePopup = React.lazy(() => import('./components/UsernamePopup'));  // Lazy load UsernamePopup component
+const MessageBox = React.lazy(() => import('./components/Messagebox'));  // Import path correction
+const UsernamePopup = React.lazy(() => import('./components/UsernamePopup'));  // Import UsernamePopup
 
 const db = getDatabase(firebaseInit);  // Use `db` for Firebase Database
 
 const MainPage = () => {
-  const [rows, setRows] = useState<any[]>([]);  // Array of message rows
-  const [username, setUsername] = useState<string>('');  // Track current user's username
-  const [message, setMessage] = useState<string>('');  // Track current message input
+  const [rows, setRows] = useState<any[]>([]);
+  const [username, setUsername] = useState<string>('');
+  const [message, setMessage] = useState<string>('');
 
   // Fetch data from Firebase
   useEffect(() => {
@@ -30,17 +30,15 @@ const MainPage = () => {
     });
   }, []);
 
-  // Submit message to Firebase
   const handleSubmit = () => {
     if (username && message) {
       const messagesRef = ref(db, 'messages');
       const newMessageRef = push(messagesRef);
       set(newMessageRef, { username, message });
-      setMessage(''); // Clear message input
+      setMessage('');
     }
   };
 
-  // Handle delete message - Only allow the owner of the message to delete it
   const handleDelete = (id: string, messageOwner: string) => {
     if (messageOwner === username) {
       const messageRef = ref(db, `messages/${id}`);
@@ -50,34 +48,20 @@ const MainPage = () => {
     }
   };
 
-  // Handle username submit
   const handleUsernameSubmit = (submittedUsername: string) => {
     setUsername(submittedUsername);
   };
 
   return (
     <div>
-      {/* Show the Username Popup if username is not set */}
       {username === '' && (
-        <React.Suspense fallback={<div>Loading Username Popup...</div>}>
-          <UsernamePopup
-            onSubmit={handleUsernameSubmit}
-            onClose={() => console.log('Popup closed')}
-          />
-        </React.Suspense>
+        <UsernamePopup onSubmit={handleUsernameSubmit} onClose={() => console.log('Popup closed')} />
       )}
-
-      {/* Main Page content */}
       <Box sx={{ width: '100%', padding: 2 }}>
         <Paper sx={{ height: 400, width: '100%' }}>
-          {/* Use the MessageBox component here, wrapped in Suspense */}
-          <React.Suspense fallback={<div>Loading Messages...</div>}>
-            <MessageBox rows={rows} onDelete={handleDelete} />
-          </React.Suspense>
+          <MessageBox rows={rows} onDelete={handleDelete} />
         </Paper>
       </Box>
-
-      {/* Input for new message */}
       <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2, padding: 2 }}>
         <input
           type="text"

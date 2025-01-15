@@ -1,4 +1,4 @@
-import React, { memo } from 'react';  // Use memo for performance optimization
+import React, { memo, useEffect, useRef } from 'react';
 import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
 import { IconButton } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -10,6 +10,17 @@ interface MessageBoxProps {
 }
 
 const MessageBox: React.FC<MessageBoxProps> = memo(({ rows, onDelete }) => {
+  const dataGridRef = useRef<HTMLDivElement>(null); // Ref for DataGrid container
+
+  useEffect(() => {
+    if (dataGridRef.current) {
+      dataGridRef.current.scrollTo({
+        top: dataGridRef.current.scrollHeight,
+        behavior: 'smooth', // Smooth scrolling
+      });
+    }
+  }, [rows]); // Trigger effect when rows are updated
+
   const columns: GridColDef[] = [
     {
       field: 'messageWithDelete',
@@ -37,7 +48,7 @@ const MessageBox: React.FC<MessageBoxProps> = memo(({ rows, onDelete }) => {
   ];
 
   return (
-    <div style={{ height: 400, width: '100%' }}>
+    <div ref={dataGridRef} style={{ height: 400, width: '100%', overflow: 'auto' }}>
       <DataGrid
         rows={rows}
         columns={columns}
@@ -47,7 +58,7 @@ const MessageBox: React.FC<MessageBoxProps> = memo(({ rows, onDelete }) => {
         disableColumnResize
         disableRowSelectionOnClick
         hideFooter
-        sx={{ overflow: 'hidden' }}  // Use MUI's `sx` for consistent styling
+        sx={{ overflow: 'hidden' }}
       />
     </div>
   );

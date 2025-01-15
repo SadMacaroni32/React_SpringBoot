@@ -1,18 +1,28 @@
 import React, { useEffect, useState } from 'react';
 import { Box, Paper } from '@mui/material';
 import { getDatabase, ref, set, push, onValue, remove } from 'firebase/database';
-import { firebaseInit } from '../../firebaseConfig';  // Ensure firebase is initialized
+import { firebaseInit } from '../../firebaseConfig'; // Ensure Firebase is initialized
 
-// Lazy load both components
-const MessageBox = React.lazy(() => import('./components/Messagebox'));  // Import path correction
-const UsernamePopup = React.lazy(() => import('./components/UsernamePopup'));  // Import UsernamePopup
+// Lazy load the MessageBox component
+const MessageBox = React.lazy(() => import('./components/Messagebox')); // Correct path to MessageBox
 
-const db = getDatabase(firebaseInit);  // Use `db` for Firebase Database
+const db = getDatabase(firebaseInit); // Firebase Database instance
 
 const MainPage = () => {
   const [rows, setRows] = useState<any[]>([]);
   const [username, setUsername] = useState<string>('');
   const [message, setMessage] = useState<string>('');
+
+  // Extract username from the URL and set it
+  useEffect(() => {
+    const queryParams = new URLSearchParams(window.location.search);
+    const extractedUsername = queryParams.get('username');
+    if (extractedUsername) {
+      setUsername(extractedUsername);
+    } else {
+      alert('Username is missing in the URL query parameters.');
+    }
+  }, []);
 
   // Fetch data from Firebase
   useEffect(() => {
@@ -48,15 +58,8 @@ const MainPage = () => {
     }
   };
 
-  const handleUsernameSubmit = (submittedUsername: string) => {
-    setUsername(submittedUsername);
-  };
-
   return (
     <div>
-      {username === '' && (
-        <UsernamePopup onSubmit={handleUsernameSubmit} onClose={() => console.log('Popup closed')} />
-      )}
       <Box sx={{ width: '100%', padding: 2 }}>
         <Paper sx={{ height: 400, width: '100%' }}>
           <MessageBox rows={rows} onDelete={handleDelete} />

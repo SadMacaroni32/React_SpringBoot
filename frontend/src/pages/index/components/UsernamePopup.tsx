@@ -20,7 +20,7 @@ const UsernamePopup: React.FC<UsernamePopupProps> = ({ onSubmit, onClose }) => {
 
   // Extract userId from URL
   useEffect(() => {
-    const id = new URLSearchParams(window.location.search).get("userId");
+    const id = new URLSearchParams(window.location.search).get("username");
     setUserId(id);
   }, []);
 
